@@ -184,8 +184,9 @@ get_expiration() ->
     get_timestamp(?HEARTBEAT_INTERVAL * ?HEARTBEAT_LIVENESS).
 
 get_timestamp(Offset) ->
-    {Mega, Sec, Micro} = erlang:now(),
-    (Mega * 1000000 + Sec) * 1000000 + Micro + Offset * 1000.
+    %{Mega, Sec, Micro} = erlang:now(),
+    %(Mega * 1000000 + Sec) * 1000000 + Micro + Offset * 1000
+    os:system_time(micro_seconds) + Offset * 1000.
 
 get_dispatcher_for_service(Service, State = #state{dispatchers = Dispatchers}) ->
     case ets:lookup(Dispatchers, Service) of

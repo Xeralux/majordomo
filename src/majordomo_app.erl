@@ -36,6 +36,10 @@
     {ok, pid(), State :: term()} |
     {error, Reason :: term()}).
 start(_StartType, _StartArgs) ->
+    application:start(sasl),
+    application:start(gen_listener_tcp),
+    lager:start(),
+    application:start(ezmq),
     case majordomo_sup:start_link() of
         {ok, Pid} ->
             {ok, Pid};
